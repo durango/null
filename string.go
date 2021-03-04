@@ -14,6 +14,9 @@ import (
 // nullBytes is a JSON null literal
 var nullBytes = []byte("null")
 
+// nullStringBytes is a JSON null casted as a string
+var nullStringBytes = []byte(`"null"`)
+
 // String is a nullable string. It supports SQL and JSON serialization.
 // It will marshal to null if null. Blank string input will be considered null.
 type String struct {

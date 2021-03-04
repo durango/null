@@ -66,7 +66,7 @@ func (t Time) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON implements json.Unmarshaler.
 // It supports string and null input.
 func (t *Time) UnmarshalJSON(data []byte) error {
-	if bytes.Equal(data, nullBytes) {
+	if bytes.Equal(data, nullBytes) || bytes.Equal(data, nullStringBytes) {
 		t.Valid = false
 		return nil
 	}

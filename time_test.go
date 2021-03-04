@@ -8,17 +8,18 @@ import (
 )
 
 var (
-	timeString1   = "2012-12-21T21:21:21Z"
-	timeString2   = "2012-12-21T22:21:21+01:00" // Same time as timeString1 but in a different timezone
-	timeString3   = "2018-08-19T01:02:03Z"
-	timeJSON      = []byte(`"` + timeString1 + `"`)
-	nullTimeJSON  = []byte(`null`)
-	timeValue1, _ = time.Parse(time.RFC3339, timeString1)
-	timeValue2, _ = time.Parse(time.RFC3339, timeString2)
-	timeValue3, _ = time.Parse(time.RFC3339, timeString3)
-	timeObject    = []byte(`{"Time":"2012-12-21T21:21:21Z","Valid":true}`)
-	nullObject    = []byte(`{"Time":"0001-01-01T00:00:00Z","Valid":false}`)
-	badObject     = []byte(`{"hello": "world"}`)
+	timeString1        = "2012-12-21T21:21:21Z"
+	timeString2        = "2012-12-21T22:21:21+01:00" // Same time as timeString1 but in a different timezone
+	timeString3        = "2018-08-19T01:02:03Z"
+	timeJSON           = []byte(`"` + timeString1 + `"`)
+	nullTimeJSON       = []byte(`null`)
+	nullTimeStringJSON = []byte(`"null"`)
+	timeValue1, _      = time.Parse(time.RFC3339, timeString1)
+	timeValue2, _      = time.Parse(time.RFC3339, timeString2)
+	timeValue3, _      = time.Parse(time.RFC3339, timeString3)
+	timeObject         = []byte(`{"Time":"2012-12-21T21:21:21Z","Valid":true}`)
+	nullObject         = []byte(`{"Time":"0001-01-01T00:00:00Z","Valid":false}`)
+	badObject          = []byte(`{"hello": "world"}`)
 )
 
 func TestUnmarshalTimeJSON(t *testing.T) {
@@ -31,6 +32,11 @@ func TestUnmarshalTimeJSON(t *testing.T) {
 	err = json.Unmarshal(nullTimeJSON, &null)
 	maybePanic(err)
 	assertNullTime(t, null, "null time json")
+
+	var nullString Time
+	err = json.Unmarshal(nullTimeStringJSON, &null)
+	maybePanic(err)
+	assertNullTime(t, nullString, "null time json")
 
 	var fromObject Time
 	err = json.Unmarshal(timeObject, &fromObject)
