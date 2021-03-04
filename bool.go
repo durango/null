@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"strings"
 )
 
 // Bool is a nullable bool.
@@ -67,7 +68,7 @@ func (b *Bool) UnmarshalJSON(data []byte) error {
 // It will return an error if the input is not an integer, blank, or "null".
 func (b *Bool) UnmarshalText(text []byte) error {
 	str := string(text)
-	switch str {
+	switch strings.Trim(str, `"`) {
 	case "", "null":
 		b.Valid = false
 		return nil
