@@ -57,7 +57,7 @@ func NewString(s string, valid bool) String {
 // UnmarshalJSON implements json.Unmarshaler.
 // It supports string and null input. Blank string input does not produce a null String.
 func (s *String) UnmarshalJSON(data []byte) error {
-	if bytes.Equal(data, nullBytes) {
+	if bytes.Equal(data, nullBytes) || bytes.Equal(data, nullStringBytes) {
 		s.Valid = false
 		return nil
 	}
